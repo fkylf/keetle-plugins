@@ -1,0 +1,44 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.horizonio</groupId>
+    <artifactId>kettle-plugins-project</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0</version>
+    <description>一个简化kettle插件开发的通用插件，采用JSON作为参数配置，省去ui调试设计步骤，只需一个类就可以开发一个插件。</description>
+
+    <name>kettle-plugins-project</name>
+
+
+    <repositories>
+        <repository>
+            <id>pentaho-releases</id>
+            <url>http://repository.pentaho.org/artifactory/repo/</url>
+        </repository>
+    </repositories>
+
+    <organization>
+        <url>www.horizonio.com</url>
+        <name>horizonio</name>
+    </organization>
+
+    <properties>
+        <!-- 主要依赖库的版本定义 -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>1.7</jdk.version>
+        <junit.version>4.11</junit.version>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.7.19</slf4j.version>
+    </properties>
+
+
+    <modules>
+
+        <module>KettleEasyExpand</module>
+        <module>kettle-plugins-demo</module>
+        <module>binary-file-output</module>
+        <module>lib</module>
+        <module>pst-input</module>
+    </modules>
+</project>
