@@ -254,9 +254,9 @@ public class EasyExpandDialog extends BaseStepDialog implements StepDialogInterf
 	
 	// let the plugin know about the entered data
 	private void ok() {
-		stepname = wStepname.getText(); // return value
-		input.setClassName(wClassName.getText());
-        input.setConfigInfo(wConfigInfo.getText());
+		stepname = wStepname.getText(); // return value 获取步骤名称
+		input.setClassName(wClassName.getText());//获取插件中的主类名
+        input.setConfigInfo(wConfigInfo.getText());//获取外部输入的配置json字符串
 		dispose();
 	}
 }

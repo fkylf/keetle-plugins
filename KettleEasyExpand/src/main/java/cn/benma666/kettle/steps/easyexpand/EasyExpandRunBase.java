@@ -53,7 +53,7 @@ public abstract class EasyExpandRunBase {
     /**
     * 获取本步骤的输出字段 <br/>
     * @author jingma
-    * @param r
+    * @param r 首次初始化事默认上一步输出到这一步的所有字段
     * @param origin
     * @param info
     * @param nextStep
@@ -73,7 +73,7 @@ public abstract class EasyExpandRunBase {
         {
             end();
             ku.setOutputDone();
-            return false;
+            return false;//当上一步没有数据输入时，返回false，表示数据处理结束
         }
         if (ku.first) {
             data.outputRowMeta = (RowMetaInterface) ku.getInputRowMeta().clone();
@@ -81,12 +81,12 @@ public abstract class EasyExpandRunBase {
             ku.first = false;
             init();
         }
-        //创建输出记录
+        //创建输出记录（拷贝上一步的输出到outputRow，斌作为本步骤的默认处理结果）
         Object[] outputRow = RowDataUtil.createResizedCopy( r, data.outputRowMeta.size() );
         disposeRow(outputRow);
         //将该记录设置到下一步骤的读取序列中
         ku.putRow(data.outputRowMeta, outputRow); // copy row to possible alternate rowset(s)
-        return true;
+        return true;//返回true表示还有数据接着继续处理
     }
 
     /**

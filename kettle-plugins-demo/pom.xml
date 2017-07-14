@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.horizonio</groupId>
-		<artifactId>kettle-plugins-project</artifactId>
-		<version>1.0.0</version>
-	</parent>
-	
+    <parent>
+        <groupId>com.horizonio</groupId>
+        <artifactId>kettle-plugins-project</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
     <groupId>com.horizonio</groupId>
     <artifactId>kettle-plugins-demo</artifactId>
     <packaging>jar</packaging>
@@ -15,18 +15,18 @@
     <description>一个简化kettle插件开发的通用插件，采用JSON作为参数配置，省去ui调试设计步骤，只需一个类就可以开发一个插件。</description>
 
     <name>kettle-plugins-demo</name>
-    
+
 
     <repositories>
         <repository>
             <id>pentaho-releases</id>
-            <url>http://repository.pentaho.org/artifactory/repo/ </url>
+            <url>http://repository.pentaho.org/artifactory/repo/</url>
         </repository>
     </repositories>
 
     <organization>
-    	<url>www.horizonio.com</url>
-    	<name>horizonio</name>
+        <url>www.horizonio.com</url>
+        <name>horizonio</name>
     </organization>
 
     <properties>
@@ -36,16 +36,42 @@
         <junit.version>4.11</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <slf4j.version>1.7.19</slf4j.version>
+        <okhttp3.version>3.8.1</okhttp3.version>
+        <okio.version>1.13.0</okio.version>
+        <kettle.version>7.0-SNAPSHOT</kettle.version>
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.horizonio</groupId>
+            <artifactId>mail</artifactId>
+            <version>1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+
         <dependency>
             <groupId>cn.benma666</groupId>
             <artifactId>KettleEasyExpand</artifactId>
-
             <version>1.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>${okio.version}</version>
+        </dependency>
 
         <!-- Log -->
         <dependency>
@@ -80,61 +106,63 @@
         </dependency>
 
         <!--<dependency>-->
-			<!--<groupId>cn.benma666</groupId>-->
-			<!--<artifactId>myutils</artifactId>-->
-			<!--<version>0.1.0</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${basedir}/lib/myutils.jar</systemPath>-->
+        <!--<groupId>cn.benma666</groupId>-->
+        <!--<artifactId>myutils</artifactId>-->
+        <!--<version>0.1.0</version>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${basedir}/lib/myutils.jar</systemPath>-->
         <!--</dependency>-->
 
 
-		<dependency>
-			<groupId>com.github.junrar</groupId>
-			<artifactId>junrar</artifactId>
-			<version>0.7</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>commons-vfs2</artifactId>
-					<groupId>org.apache.commons</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+        <dependency>
+            <groupId>com.github.junrar</groupId>
+            <artifactId>junrar</artifactId>
+            <version>0.7</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>commons-vfs2</artifactId>
+                    <groupId>org.apache.commons</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <dependency>
             <groupId>pentaho-kettle</groupId>
             <artifactId>kettle-core</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${kettle.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>pentaho-kettle</groupId>
             <artifactId>kettle-engine</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${kettle.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>pentaho-kettle</groupId>
             <artifactId>kettle-dbdialog</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${kettle.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>pentaho-kettle</groupId>
             <artifactId>kettle-ui-swt</artifactId>
-            <version>7.0-SNAPSHOT</version>
+            <version>${kettle.version}</version>
             <scope>provided</scope>
         </dependency>
 
+
+
         <!-- https://mvnrepository.com/artifact/org.eclipse/swt -->
         <!--<dependency>-->
-            <!--<groupId>org.eclipse</groupId>-->
-            <!--<artifactId>swt</artifactId>-->
-            <!--<version>3.3.0-v3346</version>-->
+        <!--<groupId>org.eclipse</groupId>-->
+        <!--<artifactId>swt</artifactId>-->
+        <!--<version>3.3.0-v3346</version>-->
         <!--</dependency>-->
 
     </dependencies>
     <build>
-        <finalName>KettleEasyExpand</finalName>
+        <finalName>KettleEasyExpand-Redis</finalName>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test/java</testSourceDirectory>
         <outputDirectory>${basedir}/target/classes</outputDirectory>
@@ -152,26 +180,26 @@
                     <showWarnings>true</showWarnings>
                     <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArguments>
-                  		<extdirs>${env.KETTLE_HOME}/lib</extdirs>
-                  		<extdirs>${env.KETTLE_HOME}/libswt/win32</extdirs>
+                        <extdirs>${env.KETTLE_HOME}/lib</extdirs>
+                        <extdirs>${env.KETTLE_HOME}/libswt/win32</extdirs>
                     </compilerArguments>
                 </configuration>
             </plugin>
 
-			<!-- Source -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>jar-no-fork</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <!-- Source -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <!-- clean插件 -->
             <plugin>
@@ -179,7 +207,7 @@
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>2.5</version>
             </plugin>
-            
+
         </plugins>
     </build>
 </project>
